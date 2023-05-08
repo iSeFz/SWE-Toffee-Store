@@ -5,6 +5,7 @@ class ShoppingManager{
     private ArrayList<Item> items;
     private ArrayList<Category> categories;
     private ArrayList<Order> orders;
+    private AccountsManager accountsManager;
 
 //  public Item searchItem(String itemName){}
     public void displayCatalog(){
@@ -22,6 +23,7 @@ class ShoppingManager{
         boolean isKG = in.nextBoolean();
         items.get(index - 1).orderItem(quantity, isKG);
         // TODO: add orderedItem to cart
+        return false;
     }
 
     public boolean addItem(String name, String cat, String description, String imageURL, String brand, float price, float availableKG, int availableUnits){
@@ -56,9 +58,9 @@ class ShoppingManager{
 
         return false;
     }
-//    boolean checkOut(user LoggedInUser ){
-//
-//    }
+    boolean checkOut(LoggedInUser user ){
+       return user.checkOut();
+    }
 
     public void selectItem(Item item){
         item.displayItem();
@@ -69,8 +71,6 @@ class ShoppingManager{
     public ArrayList<Category> getCategories(){
         return this.categories;
     }
-
-//    public void setOrder(Address address, PaymentMethod paymentMethod){}
     public boolean verifyPhone(String phone){
         return false;
     }

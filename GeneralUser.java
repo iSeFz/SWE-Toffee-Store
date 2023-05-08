@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class GeneralUser{
-    private ArrayList<OrderedItem> cart;
+    protected ArrayList<OrderedItem> cart;
     // Add an item to cart
     public void addToCart(Item item, float quantity, boolean type){
         cart.add(item.orderItem(quantity, type));

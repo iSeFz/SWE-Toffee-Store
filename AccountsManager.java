@@ -45,4 +45,9 @@ public class AccountsManager {
         }
         return false;
     }
+
+    public LoggedInUser getUsers(LoggedInUser user) {
+        int idxOfUser = users.indexOf(user);
+        return users.get(idxOfUser);
+    }
 }
