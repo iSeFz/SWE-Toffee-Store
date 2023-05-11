@@ -1,7 +1,49 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static AccountsManager accManager = new AccountsManager();
+    public static ShoppingManager shopManager = new ShoppingManager();
+    public static void readFile() throws IOException {
+        accountParse("data/RegisteredUsers.txt");
+        itemParse("data/Items.txt");
+    }
+    public static void accountParse(String path) throws FileNotFoundException, FileNotFoundException {
+        String userName, email, password;
+        File file = new File(path);
+        Scanner scf = new Scanner(file);
+        scf.useDelimiter("[,\n]");
+        while(scf.hasNext()){
+            userName = scf.next();
+            email = scf.next();
+            password = scf.next();
+            accManager.addUser(new LoggedInUser(new Account(userName,email, password)));
+        }
+    }
+
+    public static void itemParse(String path) throws IOException {
+        String name, cat, description, brand, imageURL, status;
+        float price, availableKG;
+        int availableUnits;
+        File file = new File(path);
+        Scanner scf = new Scanner(file);
+        scf.useDelimiter("[,\n]");
+        while (scf.hasNext()){
+            name = scf.next();
+            cat = scf.next();
+            description = scf.next();
+            brand = scf.next();
+            imageURL = scf.next();
+            price = scf.nextFloat();
+            availableKG = scf.nextFloat();
+            availableUnits = scf.nextInt();
+            status = scf.next();
+            shopManager.addItem(name, cat, description, imageURL, brand, price, availableKG, availableUnits);
+        }
+    }
+    public static void main(String[] args) throws IOException {
         Scanner choice = new Scanner(System.in);
         int option;
         System.out.println("\tWelcome to our Toffee Shop!");
@@ -17,10 +59,10 @@ public class Main {
             option = choice.nextInt();
             // Register a new account
             if (option == 1)
-                System.out.println("\n\tRegister a new account!");
+                accManager.signUp();
             // Login to your account
             else if (option == 2)
-                System.out.println("\n\tLogin to your account!");
+                accManager.login();
             // Display Catalog of Toffees
             else if (option == 3)
                 System.out.println("\n\tDisplay Catalog of Toffees!");

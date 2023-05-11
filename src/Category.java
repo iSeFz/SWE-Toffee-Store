@@ -1,13 +1,17 @@
+
 import java.util.ArrayList;
 
 public class Category {
     String name;
     ArrayList<Item> items;
-    Category(String name){
+
+    public Category(String name){
         this.name = name;
+        items = new ArrayList<Item>();
     }
-    Category(){
+    public Category(){
         name = "";
+        items = new ArrayList<Item>();
     }
     public void displayItems(){
         for (Item it : items){
@@ -16,7 +20,7 @@ public class Category {
             }
         }
     }
-    public void addItem(Item newItem){
+    public void addItemToCategory(Item newItem){
         items.add(newItem);
     }
     public String getName(){

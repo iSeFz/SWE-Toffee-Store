@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 
 public class GeneralUser{
@@ -14,4 +16,5 @@ public class GeneralUser{
             System.out.println("Price: " + cartItem.calcPrice());
         }
     }
+
 }

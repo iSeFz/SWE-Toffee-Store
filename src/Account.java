@@ -1,13 +1,20 @@
+
+
 public class Account {
     private String userName;
     private String email;
     private String password;
 
-    public Account(String email, String password){
+    public Account(String userName,String email, String password){
+        this.userName = userName;
         this.email = email;
         this.password = password;
     }
 
+    public Account(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
     public boolean setInfo(String name, String mail, String pass){
         this.userName = name;
         this.email = mail;

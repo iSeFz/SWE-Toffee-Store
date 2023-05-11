@@ -1,3 +1,5 @@
+
+
 public class Item {
     private String name;
     private String category;
@@ -63,6 +65,34 @@ public class Item {
 
     public ItemStatus getStatus() {
         return status;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public float getAvailableKG() {
+        return availableKG;
+    }
+
+    public int getAvailableUnits() {
+        return availableUnits;
     }
 
     public void setStatus(ItemStatus status) {
