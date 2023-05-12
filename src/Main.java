@@ -19,6 +19,7 @@ public class Main {
             userName = scf.next();
             email = scf.next();
             password = scf.next();
+            password = password.substring(0,password.length() - 1);
             accManager.addUser(new LoggedInUser(new Account(userName,email, password)));
         }
     }
@@ -44,6 +45,7 @@ public class Main {
         }
     }
     public static void main(String[] args) throws IOException {
+        readFile();
         Scanner choice = new Scanner(System.in);
         int option;
         System.out.println("\tWelcome to our Toffee Shop!");
