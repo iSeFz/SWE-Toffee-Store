@@ -1,1 +1,4 @@
-car,toys,kids toy,lol/lol,generic,20.0,0.0,5,available
+Chocolate Toffee,Toffee,Delicious Chocolate Toffee,Toffee,choco/toffee,20.0,0.0,10,available
+Strawberry Toffee,Toffee,Our unique toffee with strawberry flavor,Toffee,strawberry/toffee,150.0,0.0,5,available
+Caramel Toffee,Toffee,Enjoy our special caramel sauce,Toffee,caramel/toffee,100.0,0.0,20,available
+Chocolate Cake,Cakes,Delicious cake made by our unique dough,Cake,choco/cake,200.0,5.0,4,available

@@ -10,6 +10,8 @@ public class Item {
     private float availableKG;
     private int availableUnits;
     private ItemStatus status;
+
+    // Constructor
     public Item(String name_, String cat, String description_, String URL, String brand_, float price_, float weight, int units, ItemStatus status_){
         name = name_;
         category = cat;
@@ -22,19 +24,15 @@ public class Item {
         status = status_;
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "name='" + name + '\'' +
-                ", category=" + category +
-                ", brand='" + brand + '\'' +
-                ", price=" + price + '}';
-    }
-
+    // Display item details
     public void displayItem(){
-        System.out.println(this.toString());
+        System.out.println("[Name: '" + name +
+        "', Category: " + category +
+        ", Brand: '" + brand +
+        "', Price: " + price + "]");
     }
 
+    // Check for item availability
     public OrderedItem orderItem(float quantity, boolean isKG) {
         if(isKG){
             if(this.availableKG  < quantity){
@@ -59,43 +57,17 @@ public class Item {
         return new OrderedItem();
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public ItemStatus getStatus() {
-        return status;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public float getAvailableKG() {
-        return availableKG;
-    }
-
-    public int getAvailableUnits() {
-        return availableUnits;
-    }
-
-    public void setStatus(ItemStatus status) {
-        this.status = status;
-    }
+    // Getters & Setters
+    public String getName() { return this.name; }
+    public ItemStatus getStatus() { return status; }
+    public String getCategory() { return category; }
+    public String getDescription() { return description; }
+    public String getImageURL() { return imageURL; }
+    public String getBrand() { return brand; }
+    public float getPrice() { return price; }
+    public float getAvailableKG() { return availableKG; }
+    public int getAvailableUnits() { return availableUnits; }
+    public void setStatus(ItemStatus status) { this.status = status; }
 }
+
+
