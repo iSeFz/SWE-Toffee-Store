@@ -12,32 +12,58 @@ public class ShoppingManager {
     private ArrayList<Order> orders;
     private AccountsManager accountsManager;
 
-    //  public Item searchItem(String itemName){}
-
+    // Constructor
     public ShoppingManager() {
         items = new ArrayList<Item>();
         categories = new ArrayList<Category>();
         orders = new ArrayList<Order>();
         accountsManager = new AccountsManager();
     }
+
+    // Getters
+    public ArrayList<Item> getItems() { return this.items; }
+    public ArrayList<Category> getCategories() { return this.categories; }
+
+    // Display catalog of items
     public void displayCatalog() {
+        if(items.size() == 0){
+            System.out.println("\n\tSorry! No current items available!");
+            return;
+        }
+        System.out.println("\n\t\tOur Catalog of Items!");
         for (int i = 0; i < items.size(); i++) {
-            System.out.print("Item " + i + 1 + ": ");
+            System.out.print("Item #" + (i + 1) + ": ");
             if (items.get(i).getStatus() == ItemStatus.available) {
                 items.get(i).displayItem();
             }
         }
     }
 
-    public boolean orderItem(int index) {
+    // Order an item & add it to cart
+    public boolean orderItem(LoggedInUser user) {
+        displayCatalog();
         Scanner in = new Scanner(System.in);
+        int index;
+        while(true){
+            System.out.println("\nEnter number of item to add >> ");
+            index = in.nextInt();
+            if(index < items.size())
+                break;
+            System.out.println("\n\tINVALID item number!");
+        }
+        System.out.print("You selected item #" + index + ": ");
+        selectItem(items.get(index - 1));
+        System.out.println("Enter quantity >> ");
         float quantity = in.nextFloat();
+        System.out.println("Is quantity in KG? (true/false) >> ");
         boolean isKG = in.nextBoolean();
-        items.get(index - 1).orderItem(quantity, isKG);
-        // TODO: add orderedItem to cart
+        // Add ordered item to cart
+        user.addToCart(items.get(index - 1), quantity, isKG);
+        in.close();
         return false;
     }
 
+    // Add item from catalog to the list of items to be ordered
     public boolean addItem(String name, String cat, String description, String imageURL, String brand, float price, float availableKG, int availableUnits) throws IOException {
 
         // Search for category object
@@ -64,44 +90,30 @@ public class ShoppingManager {
         }
 
         Item newItem = new Item(name, cat, description, imageURL, brand, price, availableKG, availableUnits, stat);
-        itemDataFlush(newItem);
         items.add(newItem);
         currentCat.addItemToCategory(newItem);
-
-
-        return false;
+        // itemDataFlush(newItem);
+        return true;
     }
 
-    boolean checkOut(LoggedInUser user) {
-        return user.checkOut();
-    }
+    // Display item selected by user
+    public void selectItem(Item item) { item.displayItem(); }
 
-    public void selectItem(Item item) {
-        item.displayItem();
-    }
-
-    public ArrayList<Item> getItems() {
-        return this.items;
-    }
-
-    public ArrayList<Category> getCategories() {
-        return this.categories;
-    }
-
-    public boolean verifyPhone(String phone) {
-        return false;
-    }
-
-    public boolean payOrder(float amount) {
-        return false;
-    }
+    public boolean checkOut(LoggedInUser user) { return user.checkOut(); }
+    public boolean verifyPhone(String phone) { return false; }
+    public boolean payOrder(float amount) { return false; }
 
     public void itemDataFlush(Item item) throws IOException {
-        FileWriter fw = new FileWriter("data/Items.txt");
-        PrintWriter pw = new PrintWriter(fw, true);
+        // Check if item already exists
+        for (Item i : items) {
+            if (i.getName().equals(item.getName()))
+                return;
+        }
+        FileWriter catalogFile = new FileWriter("data/Items.txt", true);
+        PrintWriter pw = new PrintWriter(catalogFile, true);
         pw.print(item.getName() + "," + item.getCategory() + "," + item.getDescription() + ","
-                + item.getImageURL() + "," + item.getBrand() + "," + item.getPrice() + ","
-                + item.getAvailableKG() + "," + item.getAvailableUnits() + "," + item.getStatus());
+                + item.getBrand() + "," + item.getImageURL() + "," + item.getPrice() + ","
+                + item.getAvailableKG() + "," + item.getAvailableUnits() + "," + item.getStatus() + "\r");
         pw.flush();
         pw.close();
     }
