@@ -13,13 +13,16 @@ import javax.mail.Transport;
 public class AccountsManager {
     private ArrayList<LoggedInUser> users;
     private ArrayList<GeneralUser> guests;
+    private ShoppingManager shoppingManager;
 
-    public AccountsManager(){
+    public AccountsManager(ShoppingManager shoppingManager){
         users = new ArrayList<LoggedInUser>();
         guests = new ArrayList<GeneralUser>();
+        this.shoppingManager = shoppingManager;
+        shoppingManager.setAccountsManager(this);
     }
 
-    public void signUp() throws IOException {
+    public LoggedInUser signUp() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String userName = sc.nextLine();
@@ -40,27 +43,32 @@ public class AccountsManager {
         }else {
             String OTP = sendOTP(email);
             if (OTPVerification(OTP)) {
-                System.out.println("Registering successful!");
+                System.out.println("Registration successful!");
                 users.add(user);
                 accDataFlush(userName, email, password);
+                login();
             }else{
                 System.out.println("OTP is incorrect!");
+                signUp();
             }
         }
+        return user;
     }
 
-    public void login() {
+    public LoggedInUser login() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter your email: ");
         String email = sc.nextLine();
         System.out.print("Enter your password: ");
         String password = sc.nextLine();
-        if (verification(new Account(email, password))) {
+        Account user = new  Account(email, password);
+        if (verification(user)) {
             System.out.println("Login successful!");
+            return new LoggedInUser(user);
         }
-        else {
+        else
             System.out.println("Login failed!");
-        }
+        return new LoggedInUser();
     }
 
     public void logOut(Account account) {

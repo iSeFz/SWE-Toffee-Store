@@ -17,7 +17,11 @@ public class ShoppingManager {
         items = new ArrayList<Item>();
         categories = new ArrayList<Category>();
         orders = new ArrayList<Order>();
-        accountsManager = new AccountsManager();
+    }
+
+    // Setters
+    public void setAccountsManager(AccountsManager accountsManager) {
+        this.accountsManager = accountsManager;
     }
 
     // Getters
@@ -40,27 +44,30 @@ public class ShoppingManager {
     }
 
     // Order an item & add it to cart
-    public boolean orderItem(LoggedInUser user) {
+    public boolean orderItem(GeneralUser user) throws IOException {
         displayCatalog();
         Scanner in = new Scanner(System.in);
         int index;
         while(true){
-            System.out.println("\nEnter number of item to add >> ");
+            System.out.print("\nEnter number of item to add >> ");
             index = in.nextInt();
-            if(index < items.size())
+            if(index <= items.size())
                 break;
             System.out.println("\n\tINVALID item number!");
         }
-        System.out.print("You selected item #" + index + ": ");
+        System.out.println("You selected item #" + index);
         selectItem(items.get(index - 1));
-        System.out.println("Enter quantity >> ");
+        System.out.print("Enter quantity >> ");
         float quantity = in.nextFloat();
-        System.out.println("Is quantity in KG? (true/false) >> ");
+        System.out.print("Is quantity in KG? (true/false) >> ");
         boolean isKG = in.nextBoolean();
-        // Add ordered item to cart
-        user.addToCart(items.get(index - 1), quantity, isKG);
-        in.close();
-        return false;
+        OrderedItem oItem = items.get(index - 1).changeItemToOrderedItem(quantity, isKG);
+        if(oItem.getQuantity() == 0)
+            return false;
+        itemDataFlush();
+        user.addToCart(oItem);
+        System.out.println("\n\tItem added to cart successfully!");
+        return true;
     }
 
     // Add item from catalog to the list of items to be ordered
@@ -97,24 +104,20 @@ public class ShoppingManager {
     }
 
     // Display item selected by user
-    public void selectItem(Item item) { item.displayItem(); }
+    public void selectItem(Item item) { item.detailedDisplay(); }
 
     public boolean checkOut(LoggedInUser user) { return user.checkOut(); }
     public boolean verifyPhone(String phone) { return false; }
     public boolean payOrder(float amount) { return false; }
 
-    public void itemDataFlush(Item item) throws IOException {
-        // Check if item already exists
-        for (Item i : items) {
-            if (i.getName().equals(item.getName()))
-                return;
-        }
-        FileWriter catalogFile = new FileWriter("data/Items.txt", true);
+    public void itemDataFlush() throws IOException {
+        FileWriter catalogFile = new FileWriter("data/Items.txt");
         PrintWriter pw = new PrintWriter(catalogFile, true);
-        pw.print(item.getName() + "," + item.getCategory() + "," + item.getDescription() + ","
-                + item.getBrand() + "," + item.getImageURL() + "," + item.getPrice() + ","
-                + item.getAvailableKG() + "," + item.getAvailableUnits() + "," + item.getStatus() + "\r");
-        pw.flush();
-        pw.close();
+        for (Item item: items) {
+            pw.print(item.getName() + "," + item.getCategory() + "," + item.getDescription() + ","
+                    + item.getBrand() + "," + item.getImageURL() + "," + item.getPrice() + ","
+                    + item.getAvailableKG() + "," + item.getAvailableUnits() + "," + item.getStatus() + "\r");
+            pw.flush();
+        }
     }
 }

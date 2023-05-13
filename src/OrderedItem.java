@@ -13,12 +13,22 @@ public class OrderedItem {
         this.isKG = isKG;
     }
 
-    OrderedItem(){
+    public OrderedItem() {
         quantity = 0;
         currentPrice = 0;
     }
 
     public float calcPrice() {
         return currentPrice * quantity;
+    }
+
+    // Getters
+    public float getQuantity() { return quantity; }
+    public Item getItem() { return item; }
+    public boolean getType() { return isKG; }
+
+    // Setters
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
     }
 }

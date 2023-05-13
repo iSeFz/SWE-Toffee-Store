@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static AccountsManager accManager = new AccountsManager();
     public static ShoppingManager shopManager = new ShoppingManager();
+    public static AccountsManager accManager = new AccountsManager(shopManager);
 
     // Import accounts from RegisteredUsers.txt into the accManager
     public static void accountParse(String path) throws FileNotFoundException, FileNotFoundException {
@@ -29,7 +29,7 @@ public class Main {
         int availableUnits;
         File file = new File(path);
         Scanner scf = new Scanner(file);
-        scf.useDelimiter("[,\n]");
+        scf.useDelimiter("[,\n\r]");
         while (scf.hasNext()){
             name = scf.next();
             cat = scf.next();
@@ -45,6 +45,49 @@ public class Main {
         }
     }
 
+    public static void subMenu(int index) throws IOException {
+        LoggedInUser lUser = new LoggedInUser();
+        GeneralUser gUser = new GeneralUser();
+        if (index == 1)
+            lUser = accManager.signUp();
+        else if(index == 2)
+            accManager.login();
+        Scanner choice = new Scanner(System.in);
+        while(true) {
+            System.out.println("\nOur program offers the following features:\n" +
+                    "1. Display Catalog of Items\n" +
+                    "2. Shop for Toffees & Add to Cart\n" +
+                    "3. View cart of ordered items\n" +
+                    "4. Make an order to be paid through COD (Cash on delivery)\n" +
+                    "5. Exit"
+            );
+            System.out.print("Choose one of the above options >> ");
+            int option = choice.nextInt();
+            if (option == 1)
+                shopManager.displayCatalog();
+            else if (option == 2)
+                if(index == 3)
+                    shopManager.orderItem(gUser);
+                else
+                    shopManager.orderItem(lUser);
+            else if (option == 3)
+                lUser.viewCartItems();
+            else if (option == 4) {
+                if(index == 3) {
+                    System.out.println("To Checkout You Must Register First!");
+                    lUser = accManager.signUp();
+                    lUser.setCart(gUser.getCart());
+                }
+                if(lUser.checkOut())
+                    System.out.println("\n\tPayment Successfull!");
+            }
+            else if (option == 5)
+                break;
+            else
+                System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 6");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         accountParse("data/RegisteredUsers.txt");
         itemParse("data/Items.txt");
@@ -52,30 +95,20 @@ public class Main {
         int option;
         System.out.println("\tWelcome to our Toffee Shop!");
         while (true) {
-            System.out.println("\nOur program offers the following features:\n" +
-                    "1. Register a new account\n" +
+            // Guest menu
+            System.out.println("1. Register a new account\n" +
                     "2. Login to your account\n" +
-                    "3. Display Catalog of Items\n" +
-                    "4. Shop for Toffees & Add to Cart\n" +
-                    "5. View Cart & Checkout\n" +
-                    "6. Make an order to be paid through COD (Cash on delivery)\n" +
-                    "7. Exit");
+                    "3. Continue as guest\n" +
+                    "4. Exit");
             System.out.print("Choose one of the above options >> ");
             option = choice.nextInt();
             if (option == 1)
-                accManager.signUp();
+                subMenu(1);
             else if (option == 2)
-                accManager.login();
+                subMenu(2);
             else if (option == 3)
-                shopManager.displayCatalog();
-            else if (option == 4)
-                System.out.println("\n\tShop for Toffees & Add to Cart!");
-            else if (option == 5)
-                System.out.println("\n\tView Cart & Checkout!");
-            else if (option == 6)
-                System.out.println("\n\tMake an order to be paid through cash upon delivery!");
-            else if (option == 7)
-                break;
+                subMenu(3);
+            else if(option == 4) break;
             else
                 System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 6");
         }

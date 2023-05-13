@@ -26,14 +26,28 @@ public class Item {
 
     // Display item details
     public void displayItem(){
+        if( status == ItemStatus.outOfStock)
+            return;
         System.out.println("[Name: '" + name +
         "', Category: " + category +
         ", Brand: '" + brand +
         "', Price: " + price + "]");
     }
 
+    // Display item details
+    public void detailedDisplay(){
+        if(status == ItemStatus.outOfStock)
+            return;
+        System.out.println("[Name: '" + name +
+                "', Category: " + category +
+                ", Brand: '" + brand +
+                "', Price: " + price +
+                ", Available Units: " + availableUnits +
+                ", Available Kg: " + availableKG + "]");
+    }
+
     // Check for item availability
-    public OrderedItem orderItem(float quantity, boolean isKG) {
+    public OrderedItem changeItemToOrderedItem(float quantity, boolean isKG) {
         if(isKG){
             if(this.availableKG  < quantity){
                 System.out.println("Insufficient Quantity!");
@@ -54,6 +68,8 @@ public class Item {
                 return new OrderedItem(this, this.price, quantity, false);
             }
         }
+        if(this.availableUnits == 0 && this.availableKG == 0)
+            status = ItemStatus.outOfStock;
         return new OrderedItem();
     }
 

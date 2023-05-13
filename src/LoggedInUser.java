@@ -12,24 +12,28 @@ public class LoggedInUser extends GeneralUser {
 
     public LoggedInUser(Account account){
         this.account = account;
+        this.address = new Address();
+        this.order = new Order();
+
     }
-    public LoggedInUser(Account account, Address address, boolean isSuspended){
-        this.account = account;
-        this.address = address;
-        this.isSuspended = isSuspended;
+    public LoggedInUser(){
+        this.account = null;
+        this.address = new Address();
+        this.order = new Order();
     }
     public boolean checkOut(){
-        Order order = new Order(cart);
+        Order order = new Order(cart, new COD());
         System.out.println("Order Total Price is: " + order.getTotalPrice());
         this.setOrderDetails();
         System.out.println(order.showOrderInfo());
-        System.out.println("Press Y to confirm order: ");
+        System.out.print("Press Y to confirm order: ");
         Scanner sc = new Scanner(System.in);
         String choice = sc.nextLine();
         if(choice.equalsIgnoreCase("y")){
             return order.pay(order.getTotalPrice());
         }
-        return false;
+        else
+            return false;
     }
 
     public Address getAddress() {
@@ -43,19 +47,11 @@ public class LoggedInUser extends GeneralUser {
         return account;
     }
 
+
     public void setOrderDetails() {
-        address.fillAddress();
-        order.setAddress(address);
-        System.out.println("Selected Payment Method: ");
-        System.out.println("1. COD\n2. E-Wallet\nEnter your choice: ");
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        switch (choice){
-            case 1:
-                order.setPaymentMethod(new COD());
-                break;
-            case 2:
-                break;
-        }
+//        address.fillAddress();
+//        order.setAddress(address);
+        System.out.println("COD Payment Method Selected");
+        order.setPaymentMethod(new COD());
     }
 }

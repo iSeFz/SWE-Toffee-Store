@@ -9,6 +9,16 @@ public class Address {
     private int flatNumber;
     private String landmark;
 
+    public Address(){
+        this.governorate = "";
+        this.district = "";
+        this.street = "";
+        this.buildingNumber = 0;
+        this.floorNumber = 0;
+        this.flatNumber = 0;
+        this.landmark = "";
+    }
+
     public Address(String governorate, String district, String street, int buildingNumber, int floorNumber, int flatNumber, String landmark){
         this.governorate = governorate;
         this.district = district;
@@ -21,20 +31,19 @@ public class Address {
 
     public void fillAddress(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your governorate: ");
+        System.out.print("Enter your governorate: ");
         this.governorate = sc.nextLine();
-        System.out.println("Enter your district: ");
+        System.out.print("Enter your district: ");
         this.district = sc.nextLine();
-        System.out.println("Enter your street: ");
+        System.out.print("Enter your street: ");
         this.street = sc.nextLine();
-        System.out.println("Enter your building number: ");
+        System.out.print("Enter your building number: ");
         this.buildingNumber = sc.nextInt();
-        System.out.println("Enter your floor number: ");
+        System.out.print("Enter your floor number: ");
         this.floorNumber = sc.nextInt();
-        System.out.println("Enter your flat number: ");
+        System.out.print("Enter your flat number: ");
         this.flatNumber = sc.nextInt();
-        System.out.println("Enter your landmark: ");
+        System.out.print("Enter your landmark: ");
         this.landmark = sc.nextLine();
-        sc.close();
     }
 }
