@@ -71,12 +71,6 @@ public class AccountsManager {
         return new LoggedInUser();
     }
 
-    public void logOut(Account account) {
-        if (verification(account)) {
-            users.remove(new LoggedInUser(account));
-        }
-    }
-
     public boolean verification(Account account) {
         for (LoggedInUser user : users) {
             if (user.getAccount().getEmail().equals(account.getEmail())
