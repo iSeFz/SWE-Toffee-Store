@@ -1,4 +1,4 @@
-
+package Accounts;
 
 /**
  * The `Account` class is a Java class that represents a user account and contains methods to set and

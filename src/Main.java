@@ -1,3 +1,6 @@
+import Accounts.*;
+import Inventory.ShoppingManager;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,8 +50,13 @@ public class Main {
     public static void subMenu(int index) throws IOException {
         LoggedInUser lUser = new LoggedInUser();
         GeneralUser gUser = new GeneralUser();
-        if (index == 1)
+        if (index == 1) {
             lUser = accManager.signUp();
+            if (lUser == null){
+                System.out.println("\n\tRegistration Failed!");
+                return;
+            }
+        }
         else if(index == 2)
             accManager.login();
         Scanner choice = new Scanner(System.in);
@@ -78,6 +86,10 @@ public class Main {
                 if(index == 3) {
                     System.out.println("To Checkout You Must Register First!");
                     lUser = accManager.signUp();
+                    if(lUser == null){
+                        System.out.println("\n\tRegistration Failed!");
+                        return;
+                    }
                     lUser.setCart(gUser.getCart());
                 }
                 if(lUser.checkOut()){

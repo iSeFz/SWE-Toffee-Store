@@ -1,4 +1,8 @@
+package Inventory;
 
+import Accounts.AccountsManager;
+import Accounts.GeneralUser;
+import Accounts.LoggedInUser;
 
 import java.io.FileWriter;
 import java.io.IOException;

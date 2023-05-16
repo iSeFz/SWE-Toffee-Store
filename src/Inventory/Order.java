@@ -1,4 +1,6 @@
+package Inventory;
 
+import Accounts.Address;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;

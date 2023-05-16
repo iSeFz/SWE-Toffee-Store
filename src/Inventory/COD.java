@@ -1,4 +1,4 @@
-
+package Inventory;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -15,7 +15,7 @@ public class COD extends PaymentMethod {
 
 // The `COD()` method is a constructor for the `COD` class. It initializes a new instance of the `COD`
 // class with an empty string for the `phone` instance variable.
-    COD(){
+public COD(){
         this.phone = "";
     }
     // The `COD(COD paymentMethod)` is a constructor for the `COD` class that takes an instance of the

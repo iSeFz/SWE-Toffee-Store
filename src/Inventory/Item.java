@@ -1,4 +1,4 @@
-
+package Inventory;
 
 /**
  * The `Item` class represents an item in a store, with various attributes such as name, category,

@@ -1,3 +1,4 @@
+package Inventory;
 
 import java.util.ArrayList;
 

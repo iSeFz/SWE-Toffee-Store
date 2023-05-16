@@ -1,3 +1,4 @@
+package Inventory;
 
 /**
  * The PaymentMethod class is an abstract class with two abstract methods, one for making payments and

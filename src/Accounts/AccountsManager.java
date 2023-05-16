@@ -1,3 +1,6 @@
+package Accounts;
+
+import Inventory.ShoppingManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -80,6 +83,8 @@ public class AccountsManager {
             String choice = sc.nextLine();
             if(choice.equalsIgnoreCase("y"))
                 return login();
+            else
+                return null;
         }else {
             String OTP = sendOTP(email);
             if (OTPVerification(OTP)) {

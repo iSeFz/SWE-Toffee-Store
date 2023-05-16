@@ -1,4 +1,4 @@
-
+package Inventory;
 
 /**
  * The `OrderedItem` class represents an item that has been ordered, with information such as the item

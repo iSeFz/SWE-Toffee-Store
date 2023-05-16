@@ -1,4 +1,6 @@
+package Accounts;
 
+import Inventory.OrderedItem;
 
 import java.util.ArrayList;
 
@@ -60,7 +62,7 @@ public class GeneralUser{
         }
         System.out.println("\n\tYour Cart Items");
         for(OrderedItem cartItem : cart){
-            System.out.println("Name: " + cartItem.item.getName());
+            System.out.println("Name: " + cartItem.getItem().getName());
             if(cartItem.getType()){
                 System.out.println("Quantity: " + cartItem.getQuantity() + " Kg");
             }
