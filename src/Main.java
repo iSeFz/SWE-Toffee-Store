@@ -17,7 +17,6 @@ public class Main {
             userName = scf.next();
             email = scf.next();
             password = scf.next();
-            password = password.substring(0,password.length() - 1);
             accManager.addUser(new LoggedInUser(new Account(userName,email, password)));
         }
     }
@@ -71,20 +70,25 @@ public class Main {
                 else
                     shopManager.orderItem(lUser);
             else if (option == 3)
-                lUser.viewCartItems();
+                if(index == 3)
+                    gUser.viewCartItems();
+                else
+                    lUser.viewCartItems();
             else if (option == 4) {
                 if(index == 3) {
                     System.out.println("To Checkout You Must Register First!");
                     lUser = accManager.signUp();
                     lUser.setCart(gUser.getCart());
                 }
-                if(lUser.checkOut())
+                if(lUser.checkOut()){
+                    lUser.getCart().clear();
                     System.out.println("\n\tPayment Successfull!");
+                }
             }
             else if (option == 5)
                 break;
             else
-                System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 6");
+                System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 5");
         }
     }
 
@@ -110,7 +114,7 @@ public class Main {
                 subMenu(3);
             else if(option == 4) break;
             else
-                System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 6");
+                System.out.println("\n\tINVALID OPTION! Enter only numbers from 1 to 4");
         }
         choice.close();
         System.out.println("\n\tThank you for using our Toffee Shop!");

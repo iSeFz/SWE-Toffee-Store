@@ -70,13 +70,13 @@ public class Address {
         this.district = sc.nextLine();
         System.out.print("Enter your street: ");
         this.street = sc.nextLine();
+        System.out.print("Enter your landmark: ");
+        this.landmark = sc.nextLine();
         System.out.print("Enter your building number: ");
         this.buildingNumber = sc.nextInt();
         System.out.print("Enter your floor number: ");
         this.floorNumber = sc.nextInt();
         System.out.print("Enter your flat number: ");
         this.flatNumber = sc.nextInt();
-        System.out.print("Enter your landmark: ");
-        this.landmark = sc.nextLine();
     }
 }

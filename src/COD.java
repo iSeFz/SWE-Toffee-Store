@@ -1,6 +1,7 @@
 
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * The COD class is a subclass of PaymentMethod that stores a phone number and allows for payment
@@ -36,9 +37,15 @@ public class COD extends PaymentMethod {
  * attribute.
  */
     public void takePhone(){
-        System.out.print("Enter Phone Number: ");
         Scanner sc = new Scanner(System.in);
+        String phoneRegex = "^(012|011|015|010)\\d{8}$";
+        Pattern pattern = Pattern.compile(phoneRegex);
+        System.out.print("Enter Phone Number: ");
         String phoneNum = sc.nextLine();
+        while(!pattern.matcher(phoneNum).matches()){
+            System.out.print("Please enter phone number start with (012,010,011,015) and contain 11 digits: ");
+            phoneNum = sc.nextLine();
+        }
         this.setPhone(phoneNum);
     }
     /**

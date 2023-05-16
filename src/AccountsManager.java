@@ -78,7 +78,7 @@ public class AccountsManager {
             System.out.println("This email is already registered!\nDo you want to login? (Y/N)");
             String choice = sc.nextLine();
             if(choice.equalsIgnoreCase("y"))
-                login();
+                return login();
         }else {
             String OTP = sendOTP(email);
             if (OTPVerification(OTP)) {
