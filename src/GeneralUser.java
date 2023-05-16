@@ -54,9 +54,18 @@ public class GeneralUser{
  * The function displays the name, quantity, and price of each item in the cart.
  */
     public void viewCartItems(){
+        if(cart.isEmpty()){
+            System.out.println("Cart is empty nothing to view!");
+            return;
+        }
+        System.out.println("\n\tYour Cart Items");
         for(OrderedItem cartItem : cart){
             System.out.println("Name: " + cartItem.item.getName());
-            System.out.println("Quantity: " + cartItem.getQuantity());
+            if(cartItem.getType()){
+                System.out.println("Quantity: " + cartItem.getQuantity() + " Kg");
+            }
+            else
+                System.out.println("Quantity: " + (int)cartItem.getQuantity() + " Units");
             System.out.println("Price: " + cartItem.calcPrice());
         }
     }

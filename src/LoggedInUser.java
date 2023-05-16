@@ -57,18 +57,22 @@ public class LoggedInUser extends GeneralUser {
  * @return The method is returning a boolean value.
  */
     public boolean checkOut(){
-        Order order = new Order(cart, new COD());
-        System.out.println("Order Total Price is: " + order.getTotalPrice());
-        this.setOrderDetails();
-        System.out.println(order.showOrderInfo());
-        System.out.print("Press Y to confirm order: ");
-        Scanner sc = new Scanner(System.in);
-        String choice = sc.nextLine();
-        if(choice.equalsIgnoreCase("y")){
-            return order.pay(order.getTotalPrice());
+        if(!cart.isEmpty()){
+            Order order = new Order(cart, new COD());
+            System.out.println("Order Total Price is: " + order.getTotalPrice());
+            this.setOrderDetails();
+            System.out.println(order.showOrderInfo());
+            System.out.print("Press Y to confirm order: ");
+            Scanner sc = new Scanner(System.in);
+            String choice = sc.nextLine();
+            if(choice.equalsIgnoreCase("y")){
+                return order.pay(order.getTotalPrice());
+            }
+            else
+                return false;
         }
-        else
-            return false;
+        System.out.println("Cart is empty cannot check out!");
+        return false;
     }
 
 /**

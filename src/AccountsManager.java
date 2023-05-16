@@ -62,6 +62,7 @@ public class AccountsManager {
     * @return The method is returning a LoggedInUser object.
     */
     public LoggedInUser signUp() throws IOException {
+        System.out.println("\n\tRegister new account");
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String userName = sc.nextLine();
@@ -75,7 +76,7 @@ public class AccountsManager {
         String password = sc.nextLine();
         LoggedInUser user = new LoggedInUser(new Account(userName, email, password));
         if(verification(user.getAccount())){
-            System.out.println("This email is already registered!\nDo you want to login? (Y/N)");
+            System.out.print("This email is already registered!\nDo you want to login? (Y/N) ");
             String choice = sc.nextLine();
             if(choice.equalsIgnoreCase("y"))
                 return login();
@@ -103,6 +104,7 @@ public class AccountsManager {
  * the verification fails, an empty LoggedInUser object is returned.
  */
     public LoggedInUser login() {
+        System.out.println("\n\tLogin To Your Account");
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter your email: ");
         String email = sc.nextLine();
@@ -130,9 +132,13 @@ public class AccountsManager {
  */
     public boolean verification(Account account) {
         for (LoggedInUser user : users) {
-            if (user.getAccount().getEmail().equals(account.getEmail())
-                    && user.getAccount().getPassword().equals(account.getPassword())) {
-                return true;
+            if (user.getAccount().getEmail().equals(account.getEmail())) {
+                if(user.getAccount().getPassword().equals(account.getPassword()))
+                    return true;
+                else{
+                    System.out.println("Password is incorrect");
+                    return false;
+                }
             }
         }
         return false;
